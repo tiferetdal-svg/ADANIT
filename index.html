@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>אדנית חכמה</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .navbar {
+      z-index: 1050 !important;
+    }
+    .navbar-nav .nav-link {
+      font-size: 16px;
+      font-weight: 500;
+      margin: 0 10px;
+    }
+    .navbar-nav .nav-link.active {
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">
+        <img src="img/לוגו אדנית שקוף.png" alt="לוגו" style="max-height:80px; width:auto;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="index.html">בית</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">אודות</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html">גלריה</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">צור קשר</a></li>
+          <li class="nav-item"><a class="nav-link" href="personal-area.html">אזור אישי</a></li>
+          <li class="nav-item" id="nav-login"><a class="nav-link" href="login/login.html">התחברות</a></li>
+          <li class="nav-item" id="nav-profile" style="display: none;"><a class="nav-link" href="profile.html">פרופיל</a></li>
+          <li class="nav-item" id="nav-logout" style="display: none;"><a class="nav-link" href="#" onclick="globalLogout()">התנתקות</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasNavLabel" 
+       style="background-color: #4caf50; width: 60%; z-index: 2000;"> <div class="offcanvas-header">
+      <h5 class="offcanvas-title text-white" id="offcanvasNavLabel">תפריט</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="סגור"></button>
+    </div>
+    
+    <div class="offcanvas-body">
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="index.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">בית</a>
+        </li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="about.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">אודות</a>
+        </li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="gallery.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">גלריה</a>
+        </li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="contact.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">צור קשר</a>
+        </li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="personal-area.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">אזור אישי</a>
+        </li>
+        <li style="padding: 15px 0;">
+          <a href="login/login.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">התחברות</a>
+        </li>
+      </ul>
+    </div>
+  </div>>
+
+  <header class="banner text-center" style="background-image: url('https://www.misgeret.co.il/popup_image.jpg?method=get_popup&pic=329747&Print_ID=18&Frame_ID=0&Mat_ID=0&Glass_ID=0&Glue_ID=0&Coat_ID=13&PiF=0&Split=1&Style=1&PicSize=40&room_id=1'); position: relative;"> <!-- כותרת עם תמונת רקע -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(76, 175, 80, 0.4); z-index: 1;"></div> <!-- שכבת צבע שקופה מעל הרקע -->
+    <div class="overlay" style="position: relative; z-index: 2; background: none; padding: 2rem; border-radius: 10px;"> <!-- תוכן הכותרת מעל השכבה -->
+      <h1 class="display-4">ברוכים הבאים לאדנית חכמה</h1> <!-- כותרת ראשית גדולה -->
+      <p class="lead">הפוך את הגינה שלך למודרנית עם טכנולוגיות מתקדמות לשליטה באדנית</p> <!-- תיאור עיקרי -->
+    </div> <!-- סיום תוכן הכותרת -->
+  </header> <!-- סיום הכותרת -->
+  <section class="container my-4 text-center"> <!-- קטע תוכן במרכז -->
+    <p class="fs-4">גלה את הפתרונות החדשניים שלנו לניהול חכם של אדנית הצמחים שלך, כולל שליטה מרחוק, ניטור סביבתי ודישון מותאם אישית.</p> <!-- פסקה תיאורית עם גופן גדול -->
+      <img src="img/עמוד בית צמחים.png" alt="תמונה של צמחים" class="img-fluid my-4" style="max-width: 400px; display: block; margin: 0 auto;"> <!-- תמונת צמחים רספונסיבית במרכז -->
+    </a> <!-- סיום קישור התמונה -->
+  </section> <!-- סיום קטע התוכן -->
+  <footer class="bg-success text-white text-center p-3 mt-4"> <!-- כותרת תחתית בצבע ירוק -->
+    <p>© 2025 כל הזכויות שמורות.</p> <!-- טקסט זכויות יוצרים -->
+  </footer> <!-- סיום כותרת תחתית -->
+  
+  <!-- Bootstrap JS --> <!-- הערה על ייבוא JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> <!-- ייבוא Bootstrap JavaScript -->
+  <script src="js/script.js"></script> <!-- ייבוא קובץ JavaScript מותאם -->
+  <script type="module" src="js/navbar-auth.js"></script>
+</body> <!-- סיום גוף המסמך -->
+</html> <!-- סיום מסמך HTML -->

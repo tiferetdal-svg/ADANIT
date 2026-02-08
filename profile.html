@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>פרופיל משתמש</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .profile-card {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            padding: 40px;
+            margin: 20px 0;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .profile-info {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 15px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        .profile-info h6 {
+            color: #4caf50;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .profile-info p {
+            color: #333;
+            font-size: 16px;
+            margin: 0;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-right: 4px solid #4caf50;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .action-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+            color: white;
+        }
+        
+        .btn-outline {
+            background: white;
+            color: #4caf50;
+            border: 2px solid #4caf50;
+        }
+        
+        .btn-outline:hover {
+            background: #4caf50;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+        
+        .navbar {
+            z-index: 1050 !important;
+        }
+        
+        body {
+            padding-top: 100px;
+            background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e8 100%);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">
+        <img src="img/לוגו אדנית שקוף.png" alt="לוגו" style="max-height:80px; width:auto;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">בית</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">אודות</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html">גלריה</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">צור קשר</a></li>
+          <li class="nav-item"><a class="nav-link" href="personal-area.html">אזור אישי</a></li>
+          <!-- Auth-aware navigation -->
+          <li class="nav-item" id="nav-login" style="display: none;"><a class="nav-link" href="login/login.html">התחברות</a></li>
+          <li class="nav-item" id="nav-profile"><a class="nav-link active" href="profile.html">פרופיל</a></li>
+          <li class="nav-item" id="nav-logout"><a class="nav-link" href="#" onclick="globalLogout()">התנתקות</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasNavLabel" style="background-color: #4caf50; width: 50%;">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasNavLabel">תפריט</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="סגור"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);"><a href="index.html" style="color: white; text-decoration: none; font-size: 18px;">בית</a></li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);"><a href="about.html" style="color: white; text-decoration: none; font-size: 18px;">אודות</a></li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);"><a href="gallery.html" style="color: white; text-decoration: none; font-size: 18px;">גלריה</a></li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);"><a href="contact.html" style="color: white; text-decoration: none; font-size: 18px;">צור קשר</a></li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);"><a href="personal-area.html" style="color: white; text-decoration: none; font-size: 18px;">אזור אישי</a></li>
+        <li style="padding: 15px 0;">
+          <a href="profile.html" style="color: white; text-decoration: none; font-size: 18px;">פרופיל</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <main class="container my-4">
+    <!-- Loading State -->
+    <div id="loadingState" class="loading">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">טוען...</span>
+      </div>
+      <p class="mt-3">טוען פרופיל משתמש...</p>
+    </div>
+
+    <!-- Profile Content -->
+    <div id="profileContent" style="display: none;">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-6">
+          <div class="profile-card text-center">
+            <div class="profile-avatar" id="userAvatar">
+              U
+            </div>
+            
+            <h2 id="userDisplayName" class="mb-3">שם המשתמש</h2>
+            
+            <div class="profile-info">
+              <h6>שם מלא</h6>
+              <p id="userFullName">טוען...</p>
+            </div>
+            
+            <div class="profile-info">
+              <h6>כתובת אימייל</h6>
+              <p id="userEmail">טוען...</p>
+            </div>
+            
+            <div class="profile-info">
+              <h6>מזהה משתמש</h6>
+              <p id="userUID">טוען...</p>
+            </div>
+            
+            <div class="profile-info">
+              <h6>תאריך הרשמה</h6>
+              <p id="userCreatedAt">טוען...</p>
+            </div>
+            
+            <div class="profile-info">
+              <h6>התחברות אחרונה</h6>
+              <p id="userLastLogin">טוען...</p>
+            </div>
+            
+            <div class="action-buttons">
+              <a href="personal-area.html" class="action-btn btn-primary">
+                עבור לאדנית החכמה
+              </a>
+              
+              <a href="index.html" class="action-btn btn-outline">
+                עמוד הבית
+              </a>
+              
+              <button onclick="handleLogout()" class="action-btn btn-danger">
+                התנתק
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Not Authenticated State -->
+    <div id="notAuthenticatedState" style="display: none;">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="profile-card text-center">
+            <div class="profile-avatar">
+              נעול
+            </div>
+            
+            <h2>גישה מוגבלת</h2>
+            <p class="mb-4">עליך להתחבר כדי לגשת לפרופיל שלך</p>
+            
+            <div class="action-buttons">
+              <a href="login/login.html" class="action-btn btn-primary">
+                התחבר
+              </a>
+              
+              <a href="index.html" class="action-btn btn-outline">
+                חזור לעמוד הבית
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-success text-white text-center p-3 mt-4">
+    <p>© 2025 כל הזכויות שמורות.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+  <script type="module" src="js/profile.js"></script>
+  <script type="module" src="js/navbar-auth.js"></script>
+</body>
+</html>

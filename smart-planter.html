@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Planter Control</title>
+    
+    <!-- Bootstrap CSS for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header-card {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(46, 125, 50, 0.3);
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .control-card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+            overflow: hidden;
+        }
+
+        .control-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .control-button {
+            width: 100%;
+            height: 60px;
+            border: none;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .control-button:hover::before {
+            left: 100%;
+        }
+
+        /* Light Button Styles */
+        .light-off {
+            background: linear-gradient(135deg, #ffc107 0%, #ff8f00 100%);
+            color: #333;
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .light-on {
+            background: linear-gradient(135deg, #ffeb3b 0%, #ffc107 100%);
+            color: #333;
+            box-shadow: 0 4px 20px rgba(255, 235, 59, 0.6);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        /* Pump Button Styles */
+        .pump-off {
+            background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .pump-on {
+            background: linear-gradient(135deg, #03a9f4 0%, #0288d1 100%);
+            color: white;
+            box-shadow: 0 4px 20px rgba(3, 169, 244, 0.6);
+            animation: pulse 1.5s ease-in-out infinite alternate;
+        }
+
+        /* Fan Button Styles */
+        .fan-off {
+            background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+        }
+
+        .fan-on {
+            background: linear-gradient(135deg, #26c6da 0%, #00acc1 100%);
+            color: white;
+            box-shadow: 0 4px 20px rgba(38, 198, 218, 0.6);
+            animation: spin 3s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes glow {
+            from { box-shadow: 0 4px 20px rgba(255, 235, 59, 0.6); }
+            to { box-shadow: 0 6px 30px rgba(255, 235, 59, 0.9); }
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.02); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .device-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        .status-online { background-color: #4caf50; }
+        .status-offline { background-color: #f44336; }
+
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: 600;
+            z-index: 1000;
+        }
+
+        .connected {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .disconnected {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Connection Status Indicator -->
+    <div id="connectionStatus" class="connection-status disconnected">
+        <span id="connectionText">Disconnected</span>
+        <div class="status-indicator status-offline" id="statusDot"></div>
+    </div>
+
+    <div class="main-container">
+        <!-- Header Section -->
+        <div class="header-card">
+            <div class="card-body text-center py-4">
+                <h1 class="display-5 fw-bold mb-2">🌱 Smart Planter Control</h1>
+                <p class="lead mb-0">Manage your IoT planter devices remotely</p>
+            </div>
+        </div>
+
+        <!-- Control Cards -->
+        <div class="row g-4">
+            <!-- Grow Light Control -->
+            <div class="col-md-4">
+                <div class="control-card">
+                    <div class="card-body text-center p-4">
+                        <h5 class="card-title mb-3">
+                            <span class="device-icon">💡</span>
+                            Grow Light
+                        </h5>
+                        <p class="text-muted small mb-3">Controls the LED grow light for photosynthesis</p>
+                        <button 
+                            id="lightBtn" 
+                            class="control-button light-off" 
+                            onclick="toggleDevice('light')"
+                        >
+                            <span class="device-icon" id="lightIcon">🔆</span>
+                            <span id="lightStatus">OFF</span>
+                        </button>
+                        <div class="mt-2 small text-muted">
+                            Status: <span id="lightState" class="fw-bold">Offline</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Water Pump Control -->
+            <div class="col-md-4">
+                <div class="control-card">
+                    <div class="card-body text-center p-4">
+                        <h5 class="card-title mb-3">
+                            <span class="device-icon">💧</span>
+                            Water Pump
+                        </h5>
+                        <p class="text-muted small mb-3">Automated watering system controller</p>
+                        <button 
+                            id="pumpBtn" 
+                            class="control-button pump-off" 
+                            onclick="toggleDevice('pump')"
+                        >
+                            <span class="device-icon" id="pumpIcon">🚰</span>
+                            <span id="pumpStatus">OFF</span>
+                        </button>
+                        <div class="mt-2 small text-muted">
+                            Status: <span id="pumpState" class="fw-bold">Offline</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ventilation Fan Control -->
+            <div class="col-md-4">
+                <div class="control-card">
+                    <div class="card-body text-center p-4">
+                        <h5 class="card-title mb-3">
+                            <span class="device-icon">🌪️</span>
+                            Ventilation Fan
+                        </h5>
+                        <p class="text-muted small mb-3">Air circulation and temperature control</p>
+                        <button 
+                            id="fanBtn" 
+                            class="control-button fan-off" 
+                            onclick="toggleDevice('fan')"
+                        >
+                            <span class="device-icon" id="fanIcon">💨</span>
+                            <span id="fanStatus">OFF</span>
+                        </button>
+                        <div class="mt-2 small text-muted">
+                            Status: <span id="fanState" class="fw-bold">Offline</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information Card -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <span class="text-primary">📊</span>
+                            System Information
+                        </h6>
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <div class="border-end">
+                                    <div class="fw-bold text-primary">Database</div>
+                                    <div class="small">Firebase Realtime</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="border-end">
+                                    <div class="fw-bold text-success">Real-time Sync</div>
+                                    <div class="small">Instant Updates</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div>
+                                    <div class="fw-bold text-info">IoT Ready</div>
+                                    <div class="small">ESP32/Arduino Compatible</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Smart Planter IoT Control Panel | Real-time Firebase Integration</p>
+    </div>
+
+    <!-- Firebase SDK v9 -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>

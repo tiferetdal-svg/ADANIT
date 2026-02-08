@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>גלריה - אדנית חכמה</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .navbar {
+            z-index: 1050 !important;
+        }
+        .navbar-nav .nav-link {
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0 10px;
+        }
+        .navbar-nav .nav-link.active {
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 5px;
+        }
+        .page-header {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
+            padding: 150px 0 80px 0;
+            text-align: center;
+        }
+        .gallery-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .gallery-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 30px 20px 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .gallery-card:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        .filter-btn {
+            border: 2px solid #4caf50;
+            color: #4caf50;
+            background: white;
+            margin: 5px;
+            padding: 8px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: #4caf50;
+            color: white;
+        }
+        .gallery-item {
+            transition: all 0.3s ease;
+        }
+        .gallery-item.hide {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+        .video-section {
+            background: #f8f9fa;
+            padding: 60px 0;
+        }
+    </style>
+</head>
+<<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="img/לוגו אדנית שקוף.png" alt="לוגו" style="max-height:80px; width:auto;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">בית</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">אודות</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="gallery.html">גלריה</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">צור קשר</a></li>
+                    <li class="nav-item"><a class="nav-link" href="personal-area.html">אזור אישי</a></li>
+                    <li class="nav-item" id="nav-login"><a class="nav-link" href="login/login.html">התחברות</a></li>
+                    <li class="nav-item" id="nav-profile" style="display: none;"><a class="nav-link" href="profile.html">פרופיל</a></li>
+                    <li class="nav-item" id="nav-logout" style="display: none;"><a class="nav-link" href="#" onclick="globalLogout()">התנתקות</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasNavLabel" 
+       style="background-color: #4caf50; width: 60%; z-index: 2000;"> <div class="offcanvas-header">
+      <h5 class="offcanvas-title text-white" id="offcanvasNavLabel">תפריט</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="סגור"></button>
+    </div>
+    
+    <div class="offcanvas-body">
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="index.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">בית</a>
+        </li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="about.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">אודות</a>
+        </li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="gallery.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">גלריה</a>
+        </li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="contact.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">צור קשר</a>
+        </li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="personal-area.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">אזור אישי</a>
+        </li>
+        <li style="padding: 15px 0;">
+          <a href="login/login.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">התחברות</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+    <section class="page-header">
+        <div class="container">
+            <h1 class="display-4 text-white">הגלריה שלנו</h1>
+            <p class="lead">אדניות חכמות וטכנולוגיה מתקדמת לגידול צמחים</p>
+        </div>
+    </section>
+
+    <section class="gallery-filters py-4 bg-light">
+        <div class="container">
+            <div class="text-center">
+                <button class="btn filter-btn active" data-filter="all">הכל</button>
+                <button class="btn filter-btn" data-filter="planters">חממות ומערכות גידול</button>
+                <button class="btn filter-btn" data-filter="plants">פינות צמחים בבית</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery-section py-5">
+        <div class="container">
+            <div class="row g-4" id="galleryGrid">
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="planters">
+                    <div class="gallery-card">
+                        <img src="img/forest-room.jpg" alt="חממה ביתית">
+                        <div class="gallery-overlay">
+                            <h4>חממה ביתית מעוצבת</h4>
+                            <p>גידול צמחים מתקדם בבית עם בקרת אקלים</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="plants">
+                    <div class="gallery-card">
+                        <img src="img/green-office.jpg" alt="פינת צמחים בסלון">
+                        <div class="gallery-overlay">
+                            <h4>פינת צמחים מעוצבת</h4>
+                            <p>עיצוב פנים עם צמחים ירוקים בסלון</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="plants">
+                    <div class="gallery-card">
+                        <img src="img/plants-balcony.jpg" alt="חדר צמחים">
+                        <div class="gallery-overlay">
+                            <h4>חדר מלא צמחים</h4>
+                            <p>חממת זכוכית פנימית עם מגוון צמחים</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="planters">
+                    <div class="gallery-card">
+                        <img src="img/greenhouse1.jpg" alt="גינה מקורה">
+                        <div class="gallery-overlay">
+                            <h4>גינה מקורה בבית</h4>
+                            <p>מרחב ירוק פנימי עם מערכת גידול מתקדמת</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="plants">
+                    <div class="gallery-card">
+                        <img src="img/kaktus-stone.jpg" alt="מטבח עם עשבי תיבול">
+                        <div class="gallery-overlay">
+                            <h4>מטבח עם גינת תיבול</h4>
+                            <p>עשבי תיבול טריים גדלים במטבח הבית</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="plants">
+                    <div class="gallery-card">
+                        <img src="img/plant-row-wall.jpg" alt="מדפי צמחים">
+                        <div class="gallery-overlay">
+                            <h4>מדפי צמחים מעוצבים</h4>
+                            <p>פתרון חכם לגידול צמחים בחללים קטנים</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="planters">
+                    <div class="gallery-card">
+                        <img src="img/samrt-planter.jpg" alt="חממת זכוכית">
+                        <div class="gallery-overlay">
+                            <h4>חממת זכוכית במרפסת</h4>
+                            <p>חממה מעוצבת לגידול צמחים בבית</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="plants">
+                    <div class="gallery-card">
+                        <img src="img/plants-wall.jpg" alt="קיר ירוק">
+                        <div class="gallery-overlay">
+                            <h4>קיר ירוק פנימי</h4>
+                            <p>גן אנכי מקסים בתוך הבית</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="planters">
+                    <div class="gallery-card">
+                        <img src="img/smart-planter2.jpg" alt="גידול הידרופוני">
+                        <div class="gallery-overlay">
+                            <h4>סטודיו גידול הידרופוני</h4>
+                            <p>מערכת גידול מתקדמת לבית חכם</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="video-section">
+        <div class="container">
+            <!--<div class="text-center mb-5">
+                <h2 class="text-success">סרטון הדרכה</h2>
+                <p class="text-muted">למדו כיצד להשתמש באדניות החכמות שלנו</p>
+            </div>-->
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/w77zPAtVTuI?autoplay=1&mute=1" 
+                                title="סרטון הדרכה - אדנית חכמה" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-success text-white text-center py-4">
+        <div class="container">
+            <p>&copy; 2025 אדנית חכמה - טכנולוגיה מתקדמת לגידול צמחים. כל הזכויות שמורות.</p>
+            <div class="social-links mt-3">
+                <a href="#" class="text-white mx-2 text-decoration-none">Facebook</a>
+                <a href="#" class="text-white mx-2 text-decoration-none">Instagram</a>
+                <a href="#" class="text-white mx-2 text-decoration-none">YouTube</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // פונקציונליות פילטרים
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // עדכון כפתור פעיל
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // סינון פריטים
+                    galleryItems.forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.classList.remove('hide');
+                        } else {
+                            item.classList.add('hide');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    <script type="module" src="js/navbar-auth.js"></script>
+</body>
+</html>

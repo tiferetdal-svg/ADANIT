@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>אודות</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .navbar {
+      z-index: 1050 !important;
+    }
+    .navbar-nav .nav-link {
+      font-size: 16px;
+      font-weight: 500;
+      margin: 0 10px;
+    }
+    .navbar-nav .nav-link.active {
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">
+        <img src="img/לוגו אדנית שקוף.png" alt="לוגו" style="max-height:80px; width:auto;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">בית</a></li>
+          <li class="nav-item"><a class="nav-link active" href="about.html">אודות</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html">גלריה</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">צור קשר</a></li>
+          <li class="nav-item"><a class="nav-link" href="personal-area.html">אזור אישי</a></li>
+          <li class="nav-item" id="nav-login"><a class="nav-link" href="login/login.html">התחברות</a></li>
+          <li class="nav-item" id="nav-profile" style="display: none;"><a class="nav-link" href="profile.html">פרופיל</a></li>
+          <li class="nav-item" id="nav-logout" style="display: none;"><a class="nav-link" href="#" onclick="globalLogout()">התנתקות</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasNavLabel" 
+       style="background-color: #4caf50; width: 60%; z-index: 2000;"> <div class="offcanvas-header">
+      <h5 class="offcanvas-title text-white" id="offcanvasNavLabel">תפריט</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="סגור"></button>
+    </div>
+    
+    <div class="offcanvas-body">
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="index.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">בית</a>
+        </li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="about.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">אודות</a>
+        </li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="gallery.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">גלריה</a>
+        </li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="contact.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">צור קשר</a>
+        </li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+            <a href="personal-area.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">אזור אישי</a>
+        </li>
+        <li style="padding: 15px 0;">
+          <a href="login/login.html" style="color: white; text-decoration: none; font-size: 18px; display: block;">התחברות</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+    <div class="offcanvas-header"> <!-- כותרת תפריט צדדי -->
+      <h5 class="offcanvas-title" id="offcanvasNavLabel">תפריט</h5> <!-- כותרת התפריט -->
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="סגור"></button> <!-- כפתור סגירת תפריט -->
+    </div> <!-- סיום כותרת תפריט -->
+    
+  </div> <!-- סיום תפריט צדדי -->
+  <!-- End of Navbar --> <!-- סיום תפריט ניווט -->
+
+  <main class="container" style="margin-top: 100px;"> <!-- תוכן ראשי במרכז עם מרווח עליון -->
+    <h2 class="container my-4 text-center">קצת על האתר שלנו</h2> <!-- כותרת המקטע -->
+    <p class="container my-4 text-center">ברוכים הבאים ל-<strong>Growing Smart</strong> – הדרך הקלה ביותר לגדל ירוק בבית</p> <!-- פסקה פותחת עם הדגשה -->
+    <p class="container my-4 text-center">האדנית החכמה שלנו יודעת להשקות, לאוורר ולהאיר את הצמח שלך בדיוק כשצריך, בעזרת חיישנים חכמים וטכנולוגיה מתקדמת. כל מה שנשאר לך לעשות זה לבחור את הצמח וליהנות מהנוף.</p> <!-- פסקה מסבירה על המוצר -->
+    <p class="container my-4 text-center">דרך האתר תוכל לשלוט על האדנית מכל מקום, לקבל התראות בזמן אמת ולגלות טיפים לגידול מושלם.</p> <!-- פסקה על יכולות האתר -->
+    <p class="container my-4 text-center">עם <strong>Growing Smart</strong> – גם בלי ידע וניסיון, כל אחד יכול להפוך את הבית לפינה ירוקה, פורחת ומלאת חיים.</p> <!-- פסקה מסכמת עם הדגשה -->
+    <p class="container my-4 text-center">אנחנו מאמינים בבניית מערכות המציעות פתרון מלא: לא רק לאסוף נתונים, אלא להשתמש בהם בצורה חכמה כדי לקבל החלטות אוטומטיות. אתר זה הוא הראווה הדיגיטלית שלנו, המציגה את הארכיטקטורה ההנדסית שמאחורי האדנית, את נתוני ה-Live שהמערכת מפיקה ואת הדרך שבה אנחנו ממירים קוד, חומרה ואלגוריתמים לתוצאות גידול מיטביות.
+המערכת שלנו כוללת חיישנים מדויקים, בקרת מיקרו-מעבד, ותקשורת ענן יציבה. אנו מייצגים את הדור הבא של הפתרונות החקלאיים הביתיים, תוך שימוש בכלים ובמתודולוגיות ההנדסיות המתקדמות ביותר.
+
+המערכת תוכננה לשרת את המגדל הביתי שדורש תוצאות מקסימליות במינימום מאמץ. הליבה ההנדסית של מערכת הגידול שלנו מאפשרת בקרה מדויקת ומתמשכת על כל פרמטר קריטי בסביבת הגידול, החל מלחות הקרקע ועד עוצמת התאורה. עבור המשתמש, המשמעות היא שחרור מוחלט מהצורך בניטור ידני, וגישה ללוח בקרה דיגיטלי המציג את הבריאות הדינמית של הצמח בזמן אמת. אנו בונים פלטפורמה אמינה, המבטיחה כי גם מגדלים ללא ניסיון יוכלו להשיג תוצאות מקסימליות על הצד המקצועי ביותר.
+
+הרעיון לפרויקט נולד מתוך הכרה משמעותית: האתגרים היומיומיים של גידול צמחים בבית. רבים מאיתנו מעוניינים להוסיף ירק וחיים לחלל המגורים, אך נתקלים בחסמים כמו חוסר ידע, שגרת חיים עמוסה, או היעדרות ממושכת מהבית. כסטודנטים להנדסת אלקטרוניקה, ראינו פער בין הרצון לגידול מוצלח לבין היכולת להתחייב לטיפול קבוע ואחראי. לכן, פיתחנו את Growing smart - מערכת מונעת-IoT שמטרתה העיקרית היא לקחת את האחריות על הטיפול בצמח לחלוטין מידי המשתמש. הפרויקט הוא הדרך שלנו להפוך את הגידול הביתי לאוטומטי, נגיש ונטול דאגות, תוך הבטחה שהצמח יקבל בדיוק את מה שהוא צריך, גם כשאתם לא בסביבה.</p>
+  </main> <!-- סיום התוכן הראשי -->
+  <footer class="bg-success text-white text-center p-3 mt-4 fixed-bottom"> <!-- כותרת תחתית קבועה בתחתית הדף -->
+    <p>© 2025 כל הזכויות שמורות.</p> <!-- טקסט זכויות יוצרים -->
+  </footer> <!-- סיום כותרת תחתית -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> <!-- ייבוא Bootstrap JavaScript -->
+  <script src="js/script.js"></script> <!-- ייבוא קובץ JavaScript מותאם -->
+  <script type="module" src="js/navbar-auth.js"></script>
+</body> <!-- סיום גוף המסמך -->
+</html> <!-- סיום מסמך HTML -->

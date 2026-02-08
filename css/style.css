@@ -1,0 +1,156 @@
+/* סגנונות כלליים */ /* הערה על קטע סגנונות כלליים */
+body { /* עיצוב גוף הדף */
+    font-family: Arial, sans-serif; /* הגדרת גופן ברירת מחדל */
+    direction: rtl; /* כיוון טקסט מימין לשמאל */
+    text-align: right; /* יישור טקסט לימין */
+}
+
+/* סגנון עבור הבאנר */ /* הערה על קטע הבאנר */
+.banner { /* עיצוב הבאנר הראשי */
+    height: 70vh; /* גובה של 70% מגובה המסך */
+    background-size: cover; /* כיסוי מלא של התמונה */
+    background-position: center; /* מיקום התמונה במרכז */
+    display: flex; /* פריסת flexbox */
+    align-items: center; /* יישור אנכי למרכז */
+    justify-content: center; /* יישור אופקי למרכז */
+    position: relative; /* מיקום יחסי */
+    color: rgb(0, 0, 0); /* צבע טקסט שחור */
+    text-align: center; /* יישור טקסט למרכז */
+}
+
+/* אוברליי כהה על הבאנר */ /* הערה על שכבת האוברליי */
+.overlay { /* עיצוב שכבת האוברליי */
+    background-color: rgba(0, 0, 0, 0.5); /* רקע שחור בשקיפות 50% */
+    padding: 2rem; /* ריווח פנימי */
+    border-radius: 10px; /* פינות מעוגלות */
+}
+
+/* סגנונות טקסט בבאנר */ /* הערה על קטע טקסט הבאנר */
+.banner h1 { /* עיצוב כותרת ראשית בבאנר */
+    font-family: 'Segoe UI', 'Tahoma', 'Arial', sans-serif; /* גופן מותאם למערכת */
+    font-weight: 500; /* עובי גופן בינוני */
+    letter-spacing: 1px; /* ריווח בין אותיות */
+}
+
+.banner p { /* עיצוב פסקאות בבאנר */
+    font-family: 'Segoe UI', 'Tahoma', 'Arial', sans-serif; /* גופן מותאם למערכת */
+    font-weight: 500; /* עובי גופן בינוני */
+    font-size: 1.4rem; /* גודל גופן גדול */
+    letter-spacing: 0.5px; /* ריווח קטן בין אותיות */
+}
+
+/* סגנונות לטקסט בעברית */ /* הערה על קטע עברית */
+h1, h2, h3, h4, h5, h6 { /* עיצוב כל הכותרות */
+    text-align: right; /* יישור לימין */
+}
+
+p, span, div { /* עיצוב כל אלמנטי הטקסט */
+    text-align: right; /* יישור לימין */
+}
+
+/* כבד את Bootstrap text-center */
+.text-center,
+.text-center h1,
+.text-center h2,
+.text-center h3,
+.text-center h4,
+.text-center h5,
+.text-center h6,
+.text-center p,
+.text-center span,
+.text-center div {
+    text-align: center !important;
+}
+
+/* סגנונות לקישורים */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* סגנונות לטבלאות בעברית */
+table {
+    direction: rtl;
+    text-align: right;
+}
+
+th, td {
+    text-align: right;
+    padding: 8px;
+}
+
+/* סגנונות לטפסים בעברית */
+.form-label {
+    text-align: right;
+    display: block;
+}
+
+.form-control {
+    text-align: right;
+    direction: rtl;
+}
+
+/* סגנונות למובייל */
+@media (max-width: 768px) {
+    .banner {
+        height: 70vh;
+    }
+    
+    .overlay {
+        padding: 1rem;
+    }
+}
+
+/* סגנונות לגלריה */
+.gallery img {
+    transition: transform 0.3s ease;
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+}
+
+/* סגנון לאנימציה */
+.pulse {
+    animation: pulseAnimation 2s infinite;
+}
+
+@keyframes pulseAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* סגנונות למסכי רקע */
+.background-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+/* סגנון לתמונות ברספונסיב */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+/* סגנונות לנווט */
+.navbar-brand img {
+    max-height: 60px;
+}
+
+/* סגנונות לפוטר */
+footer {
+    margin-top: auto;
+}
+
+/* סגנונות לתוכן ראשי */
+main {
+    min-height: calc(100vh - 200px);
+}

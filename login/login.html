@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>התחברות - אדנית חכמה</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="login.css">
+    <!-- Firebase SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../index.html">
+        <img src="../img/לוגו אדנית שקוף.png" alt="לוגו" style="max-height:80px; width:auto;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="../index.html">בית</a></li>
+          <li class="nav-item"><a class="nav-link" href="../about.html">אודות</a></li>
+          <li class="nav-item"><a class="nav-link" href="../gallery.html">גלריה</a></li>
+          <li class="nav-item"><a class="nav-link" href="../contact.html">צור קשר</a></li>
+          <li class="nav-item"><a class="nav-link" href="../personal-area.html">אזור אישי</a></li>
+          <!-- Auth-aware navigation -->
+          <li class="nav-item" id="nav-login"><a class="nav-link active" href="login.html">התחברות</a></li>
+          <li class="nav-item" id="nav-profile" style="display: none;"><a class="nav-link" href="../profile.html">פרופיל</a></li>
+          <li class="nav-item" id="nav-logout" style="display: none;"><a class="nav-link" href="#" onclick="globalLogout()">התנתקות</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasNavLabel" style="background-color: #4caf50; width: 50%;">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasNavLabel">תפריט</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="סגור"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);"><a href="../index.html" style="color: white; text-decoration: none; font-size: 18px;">בית</a></li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);"><a href="../about.html" style="color: white; text-decoration: none; font-size: 18px;">אודות</a></li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);"><a href="../gallery.html" style="color: white; text-decoration: none; font-size: 18px;">גלריה</a></li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);"><a href="../contact.html" style="color: white; text-decoration: none; font-size: 18px;">צור קשר</a></li>
+        <li style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2);"><a href="../personal-area.html" style="color: white; text-decoration: none; font-size: 18px;">אזור אישי</a></li>
+        <li style="padding: 15px 0;">
+          <a href="login.html" style="color: white; text-decoration: none; font-size: 18px;">התחברות</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<div class="auth-container">
+    <div class="auth-card">
+      <!-- Tab Buttons -->
+      <div class="tab-buttons">
+        <button class="tab-btn active" onclick="showTab('login')">
+          <i class="fas fa-sign-in-alt me-2"></i>
+          התחברות
+        </button>
+        <button class="tab-btn" onclick="showTab('signup')">
+          <i class="fas fa-user-plus me-2"></i>
+          הרשמה
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <div id="login" class="form-container active">
+        <form onsubmit="return false;" class="auth-form">
+          <div class="form-header">
+            <div class="auth-icon">
+              <i class="fas fa-seedling"></i>
+            </div>
+            <h2>התחברות לאדנית החכמה</h2>
+          </div>
+          
+          <div id="login-message" class="auth-message"></div>
+          
+          <div class="input-group">
+            <div class="input-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <input type="email" id="loginEmail" required placeholder="כתובת אימייל">
+          </div>
+          
+          <div class="input-group">
+            <div class="input-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <input type="password" id="loginPassword" required placeholder="סיסמה">
+          </div>
+          
+          <button type="button" class="auth-btn primary" onclick="handleLogin()">
+            <i class="fas fa-sign-in-alt me-2"></i>
+            התחבר
+          </button>
+        </form>
+      </div>
+
+      <!-- Sign Up Form -->
+      <div id="signup" class="form-container">
+        <form onsubmit="return false;" class="auth-form">
+          <div class="form-header">
+            <div class="auth-icon">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <h2>הרשמה לאדנית החכמה</h2>
+          </div>
+          
+          <div id="signup-message" class="auth-message"></div>
+          
+          <div class="input-group">
+            <div class="input-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <input type="text" id="signupName" required placeholder="שם מלא">
+          </div>
+          
+          <div class="input-group">
+            <div class="input-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <input type="email" id="signupEmail" required placeholder="כתובת אימייל">
+          </div>
+          
+          <div class="input-group">
+            <div class="input-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <input type="password" id="signupPassword" required placeholder="סיסמה">
+          </div>
+          
+          <button type="button" class="auth-btn primary" onclick="handleSignUp()">
+            <i class="fas fa-user-plus me-2"></i>
+            הירשם
+          </button>
+        </form>
+      </div>
+      
+      <div class="auth-footer">
+        <a href="../index.html" class="back-link">
+          <i class="fas fa-arrow-right me-2"></i>
+          חזרה לעמוד הבית
+        </a>
+      </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/script.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script>
+        // Function to switch between Login and Sign Up tabs
+        function showTab(tabName) {
+            // Hide all forms
+            document.querySelectorAll('.form-container').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected form and activate button
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+    <script type="module" src="navbar-auth.js"></script>
+</body>
+</html>
